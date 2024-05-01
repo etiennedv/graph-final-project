@@ -1,1 +1,0 @@
-/usr/bin/c++  -std=c++11 -Wall -g -rdynamic CMakeFiles/run_tests.dir/tests/test_hw.cpp.o CMakeFiles/run_tests.dir/code/Edge.cpp.o CMakeFiles/run_tests.dir/code/Graph.cpp.o CMakeFiles/run_tests.dir/code/Node.cpp.o CMakeFiles/run_tests.dir/code/UnionFind.cpp.o -o run_tests  -lgtest_main /usr/lib/x86_64-linux-gnu/libgtest.a -lpthread 

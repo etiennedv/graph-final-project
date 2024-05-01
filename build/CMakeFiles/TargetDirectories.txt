@@ -1,5 +1,0 @@
-/home/jovyan/2270/graph-final-project/build/CMakeFiles/run_tests.dir
-/home/jovyan/2270/graph-final-project/build/CMakeFiles/run_app.dir
-/home/jovyan/2270/graph-final-project/build/CMakeFiles/test.dir
-/home/jovyan/2270/graph-final-project/build/CMakeFiles/edit_cache.dir
-/home/jovyan/2270/graph-final-project/build/CMakeFiles/rebuild_cache.dir
