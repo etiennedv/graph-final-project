@@ -45,5 +45,4 @@ bool UnionFind::Union(Edge* edge) {
     return true;
 }
 
-// Kruskal's Algorithm
 

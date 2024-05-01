@@ -23,6 +23,8 @@ public:
   vector<Edge*> getEdges();
   int getSize();
   int getClock();
+  int getSpan();
+  void addSpan(int weight);
   void addNode(Node* n);
   void addEdge(Edge* e);
   void removeNode(Node* n);
@@ -74,10 +76,12 @@ public:
   void bfs(Node* start, Node* target);
 
   vector<Node*> get_neighbors(Node* node);
+  Graph* find_path(Graph* min_tree, Node* n1, Node* n2);
   Graph* mst_kruskal();
   Graph* mkgraph();
   Graph* mkgraph_test();
   Graph* mkgraph_test2();
+  Graph* mkgraph_test3();
 private:
   bool directed;
   vector<Node*> nodes;
@@ -88,6 +92,16 @@ private:
   // The clock is used to set discovery/finish times. Increment it by one every
   // time a Node color changes to GRAY or BLACK.
   int clock;
+  int span;
+};
+
+class myComparator 
+{ 
+public: 
+    int operator() (Edge*& e1, Edge*& e2) 
+    { 
+        return e1->getWeight() > e2->getWeight(); 
+    } 
 };
 
 #endif // GRAPH_H__

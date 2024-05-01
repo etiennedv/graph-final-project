@@ -6,7 +6,6 @@
 #include "Graph.h"
 #include <unordered_map>
 #include <vector>
-#include <utility>
 #include <queue>
 #include <unordered_set>
 using namespace std;
@@ -20,17 +19,7 @@ public:
     ~UnionFind();
     Node* Find_Parent(Node* node);
     bool Union(Edge* edge);
+    
 };
-
-class myComparator 
-{ 
-public: 
-    int operator() (Edge*& e1, Edge*& e2) 
-    { 
-        return e1->getWeight() > e2->getWeight(); 
-    } 
-}; 
-// Kruskal's Algorithm
-
-
+ 
 #endif

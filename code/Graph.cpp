@@ -324,6 +324,7 @@ Graph* Graph::mst_kruskal() {
         }
         mst->addEdge(minEdge);
         mst_edges++;
+        mst->addSpan(minEdge->getWeight());
         Node* n1 = minEdge->getStart();
         Node* n2 = minEdge->getEnd();
         if (added.count(n1) == 0) {
@@ -335,6 +336,19 @@ Graph* Graph::mst_kruskal() {
           added.insert(n2);
         }
     }
-    // instead of returning a graph, remove edges from original graph?
+    
     return mst;
+}
+
+Graph* Graph::find_path(Graph* min_tree, Node* start, Node* finish) {
+  Graph* min_path(new Graph());
+  Node* curr = start;
+}
+
+void Graph::addSpan(int weight) {
+  span = span + weight;
+}
+
+int Graph::getSpan() {
+  return span;
 }

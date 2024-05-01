@@ -77,6 +77,7 @@ Graph* buildGraphToClear();
 Graph* mkgraph();
 Graph* mkgraph_test();
 Graph* mkgraph_test2();
+Graph* mkgraph_test3();
 Node* find(Graph* graph, string label);
 
 // Unit Tests
@@ -402,7 +403,7 @@ TEST_F(test_Graph, Graph_UnionFind) {
   graph->tick("Start");
   Graph* min_tree = graph->mst_kruskal();
   min_tree->tick("Done");
-  cout << "here" << endl;
+  cout << "MST span = " << min_tree->getSpan() << endl;
 }
 
 TEST_F(test_Graph, Graph_UnionFindSmallGraph) {
@@ -412,9 +413,16 @@ TEST_F(test_Graph, Graph_UnionFindSmallGraph) {
   graph->tick("Start");
   Graph* min_tree = graph->mst_kruskal();
   min_tree->tick("Done");
-  cout << "here" << endl;
 }
 
+TEST_F(test_Graph, Graph_UnionFindTest3) {
+  Graph* graph = mkgraph_test3();
+  graph->tick("Start");
+  Graph* min_tree = graph->mst_kruskal();
+  min_tree->tick("Done");
+  cout << "MST span = " << min_tree->getSpan() << endl;
+  ASSERT_EQ(min_tree->getSpan(), 9);
+}
 // ---------------------------------------------------------------- Helpers ---
 
 Graph* buildGraphToClear() {
@@ -490,6 +498,7 @@ Graph* mkgraph_test() {
   Edge* kf(new Edge(k, f));
   Edge* jk(new Edge(j, k));
   Edge* jb(new Edge(j, b));
+  Edge* gh(new Edge(g, h));
 
 
   ret->addNode(a);
@@ -522,6 +531,7 @@ Graph* mkgraph_test() {
   ret->addEdge(kf);
   ret->addEdge(jk);
   ret->addEdge(jb);
+  ret->addEdge(gh);
 
   return ret;
 }
@@ -562,6 +572,54 @@ Graph* mkgraph_test2() {
   cd->setWeight(4);
   ce->setWeight(4);
   de->setWeight(2);
+
+  return ret;
+}
+
+Graph* mkgraph_test3() {
+  Graph* ret(new Graph());
+  Node* a(new Node("a"));
+  Node* b(new Node("b"));
+  Node* c(new Node("c"));
+  Node* d(new Node("d"));
+  Node* e(new Node("e"));
+  Node* f(new Node("f"));
+
+  Edge* ab(new Edge(a, b));
+  ab->setWeight(1);
+  Edge* bc(new Edge(b, c));
+  bc->setWeight(6);
+  Edge* ad(new Edge(a, d));
+  ad->setWeight(3);
+  Edge* bd(new Edge(b, d));
+  bd->setWeight(5);
+  Edge* de(new Edge(d, e));
+  de->setWeight(1);
+  Edge* be(new Edge(b, e));
+  be->setWeight(1);
+  Edge* ce(new Edge(c, e));
+  ce->setWeight(5);
+  Edge* ef(new Edge(e, f));
+  ef->setWeight(4);
+  Edge* cf(new Edge(c, f));
+  cf->setWeight(2);
+
+  ret->addNode(a);
+  ret->addNode(b);
+  ret->addNode(c);
+  ret->addNode(d);
+  ret->addNode(e);
+  ret->addNode(f);
+
+  ret->addEdge(ab);
+  ret->addEdge(ad);
+  ret->addEdge(bc);
+  ret->addEdge(bd);
+  ret->addEdge(de);
+  ret->addEdge(be);
+  ret->addEdge(ce);
+  ret->addEdge(ef);
+  ret->addEdge(cf);
 
   return ret;
 }
