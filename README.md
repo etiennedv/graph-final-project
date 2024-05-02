@@ -25,10 +25,14 @@ Kruskal's algorithm find the minimum spanning tree of a given graph by utlizing 
 </p>
 
 
-![graphviz (1)](https://github.com/etiennedv/graph-final-project/assets/10566058/a29477fa-d840-48cb-afd5-f9b16a130fcf)![graphviz (2)](https://github.com/etiennedv/graph-final-project/assets/10566058/5240154a-47da-4d0d-834d-4a4280c75758)
+![graphviz (1)](https://github.com/etiennedv/graph-final-project/assets/10566058/a29477fa-d840-48cb-afd5-f9b16a130fcf)
+
+![graphviz (2)](https://github.com/etiennedv/graph-final-project/assets/10566058/5240154a-47da-4d0d-834d-4a4280c75758)
 
 ![graphviz (3)](https://github.com/etiennedv/graph-final-project/assets/10566058/d09b7503-ebbb-433c-9be9-ec7308e2928e)
+
 ![graphviz (5)](https://github.com/etiennedv/graph-final-project/assets/10566058/54e797f5-9533-4aef-ae3d-3f0336a58043)
+
 ![graphviz (4)](https://github.com/etiennedv/graph-final-project/assets/10566058/2e38c34a-86ef-4f0c-811d-2d9ad9b702a1)
 
 
