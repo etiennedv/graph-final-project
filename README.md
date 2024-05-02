@@ -37,13 +37,13 @@ Kruskal's algorithm find the minimum spanning tree of a given graph by utlizing 
 
 <div style="display:flex">
      <div style="flex:1;padding-right:10px;">
-          <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/a29477fa-d840-48cb-afd5-f9b16a130fcf" width="200"/>
+          <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/a29477fa-d840-48cb-afd5-f9b16a130fcf" />
      </div>
      <div style="flex:1;padding-left:10px;">
-          <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/5240154a-47da-4d0d-834d-4a4280c75758" width="300"/>
+          <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/5240154a-47da-4d0d-834d-4a4280c75758" />
      </div>
      <div style="flex:1;padding-left:10px;">
-          <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/d09b7503-ebbb-433c-9be9-ec7308e2928e" width="400"/>
+          <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/d09b7503-ebbb-433c-9be9-ec7308e2928e" />
      </div>
 </div>
 
