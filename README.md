@@ -19,32 +19,37 @@ The Union Find class contains two main member functions. The first, Find_Parent,
 Kruskal's algorithm find the minimum spanning tree of a given graph by utlizing the Union Find data structure and a min heap. To implement kruskal's algorithm, I used a min heap priority queue to hold all the edges in ascending order. The default priority queue is actually a max heap so I had to implement a myComparator class to compare each edge's weight when adding to the queue. From there I created a new instance of Graph that will hold the minimum spanning tree, and then instantiated a Union Find object passing in the vector of all nodes within the Graph. From there a while loop is created that checks if the number of edges in the minimum spanning tree is less than the number of nodes minus 1, since this is how many edges it takes to connect n nodes. Once we have n-1 edges in the spanning tree then all nodes should be connected. Now edges are popped one by one from the min heap and then the nodes in the edges are checked for union, if union returns false, then the edge is not added to the minimum spanning tree. If it is true, then the edge is added and then the next min edge is popped from the queue. Eventually we end up with all the nodes connected in a minimum spanning tree.
 
 
-# Visualization
+## Visualization
 Starting with the input graph here with all nodes and edges present with respective weights.
 <p align="center">
   <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/f15b58b3-820d-4903-8a4f-a163b6a63be6"/> 
 </p>
 
+# Step 1:
 The empty minimum spanning tree is created, and the first edge is added to the tree. This edge is the top of the min heap, so it has the smallest weight. 
 <p align="center">
   <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/a29477fa-d840-48cb-afd5-f9b16a130fcf" /> 
 </p>
 
+# Step 2:
 The second edge is now popped and added to the tree. The parents of these nodes are not the same, so they are unioned.
 <p align="center">
   <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/5240154a-47da-4d0d-834d-4a4280c75758" /> 
 </p>
 
+# Step 3:
 Now the third edge is added to the tree. So far all of the edges popped are part of the same subset.
 <p align="center">
   <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/d09b7503-ebbb-433c-9be9-ec7308e2928e" /> 
 </p>
 
+# Step 4:
 The fourth edge is popped and this one is now part of a different subset so it is not connected yet. 
 <p align="center">
   <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/2e38c34a-86ef-4f0c-811d-2d9ad9b702a1" /> 
 </p>
 
+# Step 5:
 The fifth and final edge is popped and unions the subsets together.
 <p align="center">
   <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/54e797f5-9533-4aef-ae3d-3f0336a58043" /> 
