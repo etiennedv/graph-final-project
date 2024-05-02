@@ -1,8 +1,8 @@
-# Etienne De Villiers
-# CSPB - 2270
-# Final Project
+Etienne De Villiers
+CSPB - 2270
+Final Project
 
-### Union Find & Kruskal's Algorithm
+# Union Find & Kruskal's Algorithm
 
 ## Introduction
 I used HW - Graphs as the backbone of my project, which also contained some of the utility functions I needed for implementing the Union Find data structure. A lot of the implementations of this data structure I researched did not use nodes but rather integers to denote nodes and integer pairs to represent edges. I can definitely see the benefit of using that approach as using nodes feels a bit more clunky, at least from my perspective, but the node structure also has many benefits of holding valuable meta data for analyses. 
@@ -25,31 +25,31 @@ Starting with the input graph here with all nodes and edges present with respect
   <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/f15b58b3-820d-4903-8a4f-a163b6a63be6"/> 
 </p>
 
-# Step 1:
+### Step 1:
 The empty minimum spanning tree is created, and the first edge is added to the tree. This edge is the top of the min heap, so it has the smallest weight. 
 <p align="center">
   <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/a29477fa-d840-48cb-afd5-f9b16a130fcf" /> 
 </p>
 
-# Step 2:
+### Step 2:
 The second edge is now popped and added to the tree. The parents of these nodes are not the same, so they are unioned.
 <p align="center">
   <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/5240154a-47da-4d0d-834d-4a4280c75758" /> 
 </p>
 
-# Step 3:
+### Step 3:
 Now the third edge is added to the tree. So far all of the edges popped are part of the same subset.
 <p align="center">
   <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/d09b7503-ebbb-433c-9be9-ec7308e2928e" /> 
 </p>
 
-# Step 4:
+### Step 4:
 The fourth edge is popped and this one is now part of a different subset so it is not connected yet. 
 <p align="center">
   <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/2e38c34a-86ef-4f0c-811d-2d9ad9b702a1" /> 
 </p>
 
-# Step 5:
+### Step 5:
 The fifth and final edge is popped and unions the subsets together.
 <p align="center">
   <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/54e797f5-9533-4aef-ae3d-3f0336a58043" /> 
