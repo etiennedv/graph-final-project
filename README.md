@@ -18,10 +18,10 @@ The Union Find class contains two main member functions. The first, Find_Parent,
 ## Kruskal's Algorithm
 Kruskal's algorithm find the minimum spanning tree of a given graph by utlizing the Union Find data structure and a min heap. To implement kruskal's algorithm, I used a min heap priority queue to hold all the edges in ascending order. The default priority queue is actually a max heap so I had to implement a myComparator class to compare each edge's weight when adding to the queue. From there I created a new instance of Graph that will hold the minimum spanning tree, and then instantiated a Union Find object passing in the vector of all nodes within the Graph. From there a while loop is created that checks if the number of edges in the minimum spanning tree is less than the number of nodes minus 1, since this is how many edges it takes to connect n nodes. Once we have n-1 edges in the spanning tree then all nodes should be connected. Now edges are popped one by one from the min heap and then the nodes in the edges are checked for union, if union returns false, then the edge is not added to the minimum spanning tree. If it is true, then the edge is added and then the next min edge is popped from the queue. Eventually we end up with all the nodes connected in a minimum spanning tree.
 
-<h3 style="text-align: center;">Starting Graph</h3>
+
 
 <p align="center">
-  <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/f15b58b3-820d-4903-8a4f-a163b6a63be6" /> 
+  <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/f15b58b3-820d-4903-8a4f-a163b6a63be6" "https://github.com/etiennedv/graph-final-project/assets/10566058/a29477fa-d840-48cb-afd5-f9b16a130fcf" /> 
 </p>
 
 
@@ -35,17 +35,7 @@ Kruskal's algorithm find the minimum spanning tree of a given graph by utlizing 
 
 ![graphviz (5)](https://github.com/etiennedv/graph-final-project/assets/10566058/54e797f5-9533-4aef-ae3d-3f0336a58043)
 
-<div style="display:flex">
-     <div style="flex:1;padding-right:10px;">
-          <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/a29477fa-d840-48cb-afd5-f9b16a130fcf" />
-     </div>
-     <div style="flex:1;padding-left:10px;">
-          <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/5240154a-47da-4d0d-834d-4a4280c75758" />
-     </div>
-     <div style="flex:1;padding-left:10px;">
-          <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/d09b7503-ebbb-433c-9be9-ec7308e2928e" />
-     </div>
-</div>
+
 
 
 
