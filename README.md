@@ -1,6 +1,6 @@
-Etienne De Villiers
-CSPB - 2270
-Final Project
+### Etienne De Villiers
+### CSPB - 2270
+### Final Project
 
 # Union Find & Kruskal's Algorithm
 
