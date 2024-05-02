@@ -7,6 +7,7 @@
 #include "UnionFind.h"
 #include <memory>
 #include <queue>
+#include <deque>
 #include <set>
 #include <string>
 #include <vector>
@@ -24,6 +25,7 @@ public:
   int getSize();
   int getClock();
   int getSpan();
+  vector<Edge*> adj_edges(Node* node);
   void addSpan(int weight);
   void addNode(Node* n);
   void addEdge(Edge* e);
@@ -75,13 +77,16 @@ public:
   // If it is not found, the target node should remain WHITE with a rank of -1.
   void bfs(Node* start, Node* target);
 
-  vector<Node*> get_neighbors(Node* node);
-  Graph* find_path(Graph* min_tree, Node* n1, Node* n2);
+  void add_neighbors(Node* node);
+  void set_neighbors();
+  void find_path(Node* n1, Node* n2);
   Graph* mst_kruskal();
+  Graph* mst_prim();
   Graph* mkgraph();
   Graph* mkgraph_test();
   Graph* mkgraph_test2();
   Graph* mkgraph_test3();
+  Graph* mkgraph_test4();
 private:
   bool directed;
   vector<Node*> nodes;

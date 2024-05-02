@@ -86,6 +86,13 @@ int Node::getRank() {
   return rank;
 }
 
+void Node::add_neighbor(Node* n) {
+  this->neighbors.push_back(n);
+}
+
+vector<Node*> Node::get_neighbors() {
+  return neighbors;
+}
 
 // overloading operator << lets you put a Node object into an output
 // stream.

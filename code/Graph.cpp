@@ -4,6 +4,7 @@
 #include <sstream>
 
 using namespace std;
+using std::cout;
 
 // fwd declarations
 string make_dot(Graph* g);
@@ -174,13 +175,16 @@ void Graph::bfs(Node* start, Node* finish) {
       if (!isDirected()) {
         curr->setRank(1);
       }
+      
       break;
     }
-    vector<Node*> neighbors = get_neighbors(curr);
-    for (auto n : neighbors) {
+    //vector<Node*> neighbors = get_neighbors(curr);
+
+    for (auto n : curr->get_neighbors()) {
       if (n->getColor() == 1) {
         n->setRank(curr->getRank() + 1);
         n->setColor(GRAY, getClock());
+        n->setPredecessor(curr);
         clock++;
         node_q.push(n);
       }
@@ -188,18 +192,35 @@ void Graph::bfs(Node* start, Node* finish) {
   }
 }
 
-vector<Node*> Graph::get_neighbors(Node* node) {
-  vector<Edge*> edges = getEdges();
-  vector<Node*> neighbors;
-  for (auto e: edges) {
-    if (e->getStart() == node) {
-      e->getEnd()->setPredecessor(node);
-      neighbors.push_back(e->getEnd());
+vector<Edge*> Graph::adj_edges(Node* node) {
+  vector<Edge*> neighbors;
+  for (auto e: this->getEdges()) {
+    if (e->getStart() == node || e->getEnd() == node) {
+      neighbors.push_back(e);
     }
   }
   return neighbors;
 }
 
+void Graph::add_neighbors(Node* node) {
+  vector<Edge*> edges = getEdges();
+  //vector<Node*> neighbors;
+  for (auto e: edges) {
+    if (e->getStart() == node) {
+      e->getEnd()->setPredecessor(node);
+      //neighbors.push_back(e->getEnd());
+      node->add_neighbor(e->getEnd());
+    }
+  }
+  //return neighbors;
+}
+
+void Graph::set_neighbors() {
+  vector<Node*> nodes = this->getNodes();
+  for (auto n: nodes) {
+    add_neighbors(n);
+  }
+}
 // overloading operator << lets you put a Graph object into an output
 // stream.
 ostream& operator<<(ostream& out, Graph graph) {
@@ -263,7 +284,7 @@ string make_dot(Graph* g) {
     con = "->";
     gt = "digraph";
   }
-  ss << gt << " homework {" << endl;
+  ss << gt << " weighted {" << endl;
   int c, dt, ft, r;
   string textColor = "black";
   for (auto it = nodes.begin(); it != nodes.end(); ++it) {
@@ -322,11 +343,13 @@ Graph* Graph::mst_kruskal() {
         if (!unionFind.Union(minEdge)) {
           continue;
         }
+
         mst->addEdge(minEdge);
         mst_edges++;
         mst->addSpan(minEdge->getWeight());
         Node* n1 = minEdge->getStart();
         Node* n2 = minEdge->getEnd();
+        
         if (added.count(n1) == 0) {
           mst->addNode(n1);
           added.insert(n1);
@@ -340,9 +363,81 @@ Graph* Graph::mst_kruskal() {
     return mst;
 }
 
-Graph* Graph::find_path(Graph* min_tree, Node* start, Node* finish) {
-  Graph* min_path(new Graph());
-  Node* curr = start;
+// Prim's algorithm
+Graph* Graph::mst_prim() {
+  priority_queue <Edge, vector<Edge*>, myComparator> minHeap;
+  //this->set_neighbors();
+  vector<Node*> nodes = this->getNodes();
+  Node* start = nodes[0];
+  cout << start->getData();
+  for (auto e: adj_edges(start)) {
+    minHeap.push(e);
+  }
+  Graph* mst(new Graph());
+  unordered_set<Node*> added;
+  unordered_set<Edge*> added_edges;
+  added.insert(start);
+  mst->addNode(start);
+  while (added.size() < this->getSize()) {
+    Edge* minEdge = minHeap.top();
+    Node* node1 = minEdge->getStart();
+    Node* node2 = minEdge->getEnd();
+    minHeap.pop();
+
+    if (added.count(node2) > 0) {
+      continue;
+    }
+    
+    mst->addEdge(minEdge);
+    added_edges.insert(minEdge);
+    mst->addSpan(minEdge->getWeight());
+    if (added.count(node1) == 0) {
+      mst->addNode(node1);
+      cout << node1->getData();
+      added.insert(node1);
+    }
+    if (added.count(node2) == 0) {
+      mst->addNode(node2);
+      cout << node2->getData();
+      added.insert(node2);
+    }
+    
+    for (auto e: adj_edges(node2)) {
+      if (added_edges.count(e) == 0) {
+        minHeap.push(e);
+      }
+    }
+  }
+
+  return mst;
+}
+
+void Graph::find_path(Node* start, Node* finish) {
+  vector<Node*> nodes = this->getNodes();
+  set<Node*> path;
+  deque<Node*> q;
+  q.push_back(start);
+  std::cout << "Path from " << start->getData() << " to " << finish->getData() << ":" << endl;
+  
+  while (q.size() > 0) {
+    Node* curr = q.front();
+    q.pop_front();
+    if (path.count(curr) == 0) {
+      path.insert(curr);
+    }
+    if (curr == finish) {
+      for (auto node: path) {
+        std::cout << node->getData();
+      }
+      cout << endl;
+      return;
+    }
+    for (auto node: nodes) {
+      if (path.count(node) == 0) {
+        q.push_back(node);
+      }
+    }
+  }
 }
 
 void Graph::addSpan(int weight) {

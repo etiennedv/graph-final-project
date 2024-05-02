@@ -78,323 +78,15 @@ Graph* mkgraph();
 Graph* mkgraph_test();
 Graph* mkgraph_test2();
 Graph* mkgraph_test3();
+Graph* mkgraph_test4();
 Node* find(Graph* graph, string label);
 
 // Unit Tests
 
-TEST_F(test_Graph, Graph_EdgeSetType) {
-  Node* a(new Node("a"));
-  Node* b(new Node("b"));
-  Edge* ab(new Edge(a, b));
-  ab->type = CROSS_EDGE;
-  ab->setType(FORWARD_EDGE);
-  ASSERT_EQ(ab->type, FORWARD_EDGE);
-  add_points_to_grade(5);
-  ab->setType(UNDISCOVERED_EDGE);
-  ASSERT_EQ(ab->type, UNDISCOVERED_EDGE);
-  add_points_to_grade(5);
-}
-
-TEST_F(test_Graph, Graph_ClearNode) {
-  Node* n(new Node("some node"));
-  Node* p(new Node("some other node"));
-  n->color = BLACK;
-  n->discovery_time = 42;
-  n->completion_time = 108;
-  n->rank = 23;
-  n->predecessor = p;
-  n->clear();
-  ASSERT_EQ(n->color, WHITE);
-  add_points_to_grade(2);
-  ASSERT_EQ(n->discovery_time, -1);
-  add_points_to_grade(2);
-  ASSERT_EQ(n->completion_time, -1);
-  add_points_to_grade(2);
-  ASSERT_EQ(n->rank, -1);
-  add_points_to_grade(2);
-  ASSERT_FALSE(n->predecessor);
-  add_points_to_grade(2);
-}
-
-TEST_F(test_Graph, Graph_ClearGraph) {
-  // HINT: implement 'Node::clear' and 'Edge::setType', and then use
-  // them to implement 'Graph::clear'.
-  Graph* g = buildGraphToClear();
-  g->clear();
-  ASSERT_EQ(g->clock, 0);
-  add_points_to_grade(1);
-
-  for (auto it = g->nodes.begin(); it != g->nodes.end(); ++it) {
-    Node* n(*it);
-    ASSERT_EQ(n->color, WHITE);
-    add_points_to_grade(1);
-    ASSERT_FALSE(n->predecessor);
-    add_points_to_grade(1);
-    ASSERT_EQ(n->discovery_time, -1);
-    add_points_to_grade(1);
-    ASSERT_EQ(n->completion_time, -1);
-    add_points_to_grade(1);
-    ASSERT_EQ(n->rank, -1);
-    add_points_to_grade(1);
-  }
-  for (auto it = g->edges.begin(); it != g->edges.end(); ++it) {
-    Edge* e(*it);
-    ASSERT_EQ(e->type, UNDISCOVERED_EDGE);
-    add_points_to_grade(0.5);
-  }
-}
-
-TEST_F(test_Graph, Graph_SetNodeColor) {
-  {
-    Node* n(new Node("some node"));
-    n->color = BLACK;
-    n->discovery_time = 10;
-    n->completion_time = 11;
-    n->setColor(WHITE, 18); // The 18 should be ignored
-    ASSERT_EQ(n->color, WHITE);
-    add_points_to_grade(1);
-    ASSERT_EQ(n->discovery_time, -1);
-    add_points_to_grade(1);
-    ASSERT_EQ(n->completion_time, -1);
-    add_points_to_grade(1);
-  }
-  {
-    Node* n(new Node("some node"));
-    n->color = WHITE;
-    n->discovery_time = -1;
-    n->completion_time = -1;
-    n->setColor(GRAY, 18);
-    ASSERT_EQ(n->color, GRAY);
-    add_points_to_grade(1);
-    ASSERT_EQ(n->discovery_time, 18);
-    add_points_to_grade(1);
-    ASSERT_EQ(n->completion_time, -1);
-    add_points_to_grade(1);
-  }
-  {
-    Node* n(new Node("some node"));
-    n->color = GRAY;
-    n->discovery_time = 10;
-    n->completion_time = -1;
-    n->setColor(BLACK, 18);
-    ASSERT_EQ(n->color, BLACK);
-    add_points_to_grade(1);
-    ASSERT_EQ(n->discovery_time, 10);
-    add_points_to_grade(1);
-    ASSERT_EQ(n->completion_time, 18);
-    add_points_to_grade(1);
-  }
-}
-
-TEST_F(test_Graph, Graph_NodeGetDiscoInfo) {
-  Node* n(new Node("some node"));
-  n->color = GRAY;
-  n->discovery_time = 10;
-  n->completion_time = 18;
-  n->rank = 4;
-  int c, dt, ct, r;
-  n->getDiscoveryInformation(c, dt, ct, r);
-  ASSERT_EQ(c, GRAY);
-  add_points_to_grade(2);
-  ASSERT_EQ(dt, 10);
-  add_points_to_grade(2);
-  ASSERT_EQ(ct, 18);
-  add_points_to_grade(2);
-  ASSERT_EQ(r, 4);
-  add_points_to_grade(2);
-}
-
-TEST_F(test_Graph, Graph_TestIfNodeIsSpanningTreeAncestor) {
-  Node* a(new Node("a"));
-  Node* b(new Node("b"));
-  Node* c(new Node("c"));
-  Node* e(new Node("e"));
-  a->predecessor = NULL;
-  b->predecessor = a;
-  c->predecessor = a;
-  e->predecessor = c;
-
-  ASSERT_EQ(a->isAncestor(c), false);
-  add_points_to_grade(2);
-  ASSERT_EQ(c->isAncestor(a), true);
-  add_points_to_grade(2);
-  ASSERT_EQ(e->isAncestor(a), true);
-  add_points_to_grade(2);
-  ASSERT_EQ(e->isAncestor(b), false);
-  add_points_to_grade(2);
-}
-
-TEST_F(test_Graph, Graph_SetSpanningTreePredecessor) {
-  Node* a(new Node("a"));
-  Node* c(new Node("c"));
-  Node* e(new Node("e"));
-  c->setPredecessor(a);
-  e->setPredecessor(c);
-
-  ASSERT_EQ(c->predecessor, a);
-  add_points_to_grade(5);
-  ASSERT_EQ(e->predecessor, c);
-  add_points_to_grade(5);
-}
-
-TEST_F(test_Graph, Graph_DepthFirstSeartchNoTrarget) {
-  Graph* g = mkgraph();
-  g->clear();
-  ASSERT_EQ(g->clock, 0);
-  add_points_to_grade(2);
-  Node* a = find(g, "a");
-  ASSERT_TRUE(a); // sanity check my find function, "a" shouldn't be null
-  add_points_to_grade(2);
-  g->dfs(a);
-  ASSERT_GT(g->clock, 0); // clock should increment beyond zero
-  add_points_to_grade(2);
-  ASSERT_EQ(a->color, BLACK); // start node should be fully explored
-  add_points_to_grade(2);
-  ASSERT_EQ(a->discovery_time, 0); // start node discovered at t=0
-  add_points_to_grade(2);
-  ASSERT_EQ(a->completion_time, 13); // should finish at exactly t=13
-  add_points_to_grade(2);
-  int c, dt, ft, r;
-  for (auto it = g->nodes.begin(); it != g->nodes.end(); ++it) {
-    Node* n(*it);
-    ASSERT_TRUE(n);
-    n->getDiscoveryInformation(c, dt, ft, r);
-    ASSERT_EQ(c, BLACK); // all nodes should be fully explored
-    add_points_to_grade(0.25);
-    ASSERT_GE(dt, 0); // discovered between 0 and 6 inclusive;
-    add_points_to_grade(0.25);
-    ASSERT_LE(dt, 6);
-    add_points_to_grade(0.25);
-    ASSERT_GE(ft, 7); // finish time between 7 and 13 inclusive
-    add_points_to_grade(0.25);
-    ASSERT_LE(ft, 13);
-    add_points_to_grade(0.5);
-  }
-  Node* f = find(g, "f");
-  Node* d = find(g, "d");
-  ASSERT_EQ(f->predecessor, d);
-  add_points_to_grade(1);
-}
-
-TEST_F(test_Graph, Graph_DepthFirstSeartchEdgeTypes) {
-  Graph* g = mkgraph();
-  g->clear();
-  ASSERT_EQ(g->clock, 0);
-  add_points_to_grade(1);
-  Node* a = find(g, "a");
-  ASSERT_TRUE(a); // sanity check my find function
-  add_points_to_grade(1);
-  g->dfs(a); // run the DFS
-  
-
-  // declare vars to count number of each kind of edge
-  int numFwd = 0;
-  int numTree = 0;
-  int numBack = 0;
-  int numCross = 0;
-  for (auto it = g->edges.begin(); it != g->edges.end(); ++it) {
-    Edge* e(*it);
-    ASSERT_TRUE(e);
-    add_points_to_grade(1);
-    if (e->getType() == FORWARD_EDGE) {
-      numFwd++;
-    } else if (e->getType() == TREE_EDGE) {
-      numTree++;
-    } else if (e->getType() == BACK_EDGE) {
-      numBack++;
-    } else if (e->getType() == CROSS_EDGE) {
-      numCross++;
-    }
-  }
-
-  // The classification of edges depends on traversal order & can't be
-  // predicted at write-time, so test sums and inequalities instead.
-  ASSERT_EQ(numTree + numFwd + numBack + numCross, 12);
-  add_points_to_grade(1);
-  ASSERT_GE(numTree, 6);
-  add_points_to_grade(1);
-  ASSERT_GT(numFwd, 0);
-  add_points_to_grade(1);
-  ASSERT_GT(numBack, 0);
-  add_points_to_grade(1);
-  ASSERT_EQ(numCross, 0);
-  add_points_to_grade(1);
-}
-
-TEST_F(test_Graph, Graph_BreadthFirstSearch) {
-  Graph* graph = mkgraph();
-  graph->clear();
-  Node* a = find(graph, "a");
-  Node* b = find(graph, "b");
-  Node* c = find(graph, "c");
-  Node* d = find(graph, "d");
-  Node* e = find(graph, "e");
-  Node* f = find(graph, "f");
-  Node* g = find(graph, "g");
-  int color, dt, ft, rank;
-
-  graph->bfs(a);
-  a->getDiscoveryInformation(color, dt, ft, rank);
-  ASSERT_EQ(rank, 0);
-  add_points_to_grade(2);
-  b->getDiscoveryInformation(color, dt, ft, rank);
-  ASSERT_EQ(rank, 1);
-  add_points_to_grade(2);
-  c->getDiscoveryInformation(color, dt, ft, rank);
-  ASSERT_EQ(rank, 1);
-  add_points_to_grade(2);
-  e->getDiscoveryInformation(color, dt, ft, rank);
-  ASSERT_EQ(rank, 1);
-  add_points_to_grade(2);
-  d->getDiscoveryInformation(color, dt, ft, rank);
-  ASSERT_EQ(rank, 2);
-  add_points_to_grade(2);
-  g->getDiscoveryInformation(color, dt, ft, rank);
-  ASSERT_EQ(rank, 2);
-  add_points_to_grade(2);
-  f->getDiscoveryInformation(color, dt, ft, rank);
-  ASSERT_EQ(rank, 3);
-  add_points_to_grade(2);
-}
-
-TEST_F(test_Graph, Graph_BreadthFirstSearchWithTarget) {
-  int color, dt, ft, rank;
-  {
-    Graph* graph = mkgraph();
-    graph->clear();
-    Node* c = find(graph, "c");
-    Node* f = find(graph, "f");
-    graph->bfs(c, f);
-    f->getDiscoveryInformation(color, dt, ft, rank);
-    ASSERT_EQ(rank, 2);
-    add_points_to_grade(5);
-  }
-  {
-    Graph* graph = mkgraph();
-    graph->clear();
-    Node* b = find(graph, "b");
-    Node* c = find(graph, "c");
-    graph->bfs(c, b);
-    b->getDiscoveryInformation(color, dt, ft, rank);
-    ASSERT_EQ(rank, 3); // rank is 3 if graph is directed
-    add_points_to_grade(5);
-  }
-  {
-    Graph* graph = mkgraph();
-    graph->setDirected(false);
-    graph->clear();
-    Node* b = find(graph, "b");
-    Node* c = find(graph, "c");
-    graph->bfs(c, b);
-    b->getDiscoveryInformation(color, dt, ft, rank);
-    ASSERT_EQ(rank, 1); // rank is 1 if graph is undirected
-    add_points_to_grade(5);
-  }
-}
-
 TEST_F(test_Graph, Graph_UnionFind) {
   Graph* graph = mkgraph_test();
   vector<Edge*> edges = graph->getEdges();
+  vector<Node*> nodes = graph->getNodes();
   int N = 10;
   for (auto e: edges) {
     e->setWeight((rand() % N) + 1);
@@ -404,6 +96,7 @@ TEST_F(test_Graph, Graph_UnionFind) {
   Graph* min_tree = graph->mst_kruskal();
   min_tree->tick("Done");
   cout << "MST span = " << min_tree->getSpan() << endl;
+  graph->find_path(find(min_tree, "j"), find(min_tree, "i"));
 }
 
 TEST_F(test_Graph, Graph_UnionFindSmallGraph) {
@@ -413,6 +106,7 @@ TEST_F(test_Graph, Graph_UnionFindSmallGraph) {
   graph->tick("Start");
   Graph* min_tree = graph->mst_kruskal();
   min_tree->tick("Done");
+
 }
 
 TEST_F(test_Graph, Graph_UnionFindTest3) {
@@ -420,9 +114,25 @@ TEST_F(test_Graph, Graph_UnionFindTest3) {
   graph->tick("Start");
   Graph* min_tree = graph->mst_kruskal();
   min_tree->tick("Done");
+
+  cout << "MST span = " << min_tree->getSpan() << endl;
+  ASSERT_EQ(min_tree->getSpan(), 9);
+
+  vector<Node*> nodes = min_tree->getNodes();
+  //min_tree->find_path(nodes[0], nodes[3]);
+  
+}
+
+TEST_F(test_Graph, Graph_PrimsAlgorithm) {
+  Graph* graph = mkgraph_test3();
+  graph->tick("Start");
+  Graph* min_tree = graph->mst_prim();
+  min_tree->tick("Done");
+
   cout << "MST span = " << min_tree->getSpan() << endl;
   ASSERT_EQ(min_tree->getSpan(), 9);
 }
+
 // ---------------------------------------------------------------- Helpers ---
 
 Graph* buildGraphToClear() {

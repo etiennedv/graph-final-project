@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <memory>
-
+#include <vector>
 using namespace std;
 
 // Node discovery information (aka 'color') is described in the README.
@@ -20,7 +20,7 @@ private:
   int rank;            // Number of steps from source node in a BFS. 0
                        // means it was the source node.
   Node* predecessor;   // The predecessor node in the spanning tree.
-
+  vector<Node*> neighbors;
 public:
   // Public Node members in this block are implemented for you.
   Node(string s);
@@ -28,6 +28,9 @@ public:
   string getData();
   void setData(string s);
   void setRank(int rank);
+  void add_neighbor(Node* n);
+  vector<Node*> get_neighbors();
+  
 
   // Have you ever wondered when you say `cout << "hello world!" << endl;` what
   // `<<` means? How is it implemented? These are operator methods that you can
