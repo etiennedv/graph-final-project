@@ -20,5 +20,8 @@ Kruskal's algorithm find the minimum spanning tree of a given graph by utlizing 
 
 ![StartGraph](https://github.com/etiennedv/graph-final-project/assets/10566058/f15b58b3-820d-4903-8a4f-a163b6a63be6)
 
+![graphviz (1)](https://github.com/etiennedv/graph-final-project/assets/10566058/a29477fa-d840-48cb-afd5-f9b16a130fcf)
+
+
 
 
