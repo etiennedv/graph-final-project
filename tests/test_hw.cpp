@@ -119,19 +119,10 @@ TEST_F(test_Graph, Graph_UnionFindTest3) {
   ASSERT_EQ(min_tree->getSpan(), 9);
 
   vector<Node*> nodes = min_tree->getNodes();
-  //min_tree->find_path(nodes[0], nodes[3]);
+  
   
 }
 
-TEST_F(test_Graph, Graph_PrimsAlgorithm) {
-  Graph* graph = mkgraph_test3();
-  graph->tick("Start");
-  Graph* min_tree = graph->mst_prim();
-  min_tree->tick("Done");
-
-  cout << "MST span = " << min_tree->getSpan() << endl;
-  ASSERT_EQ(min_tree->getSpan(), 9);
-}
 
 // ---------------------------------------------------------------- Helpers ---
 

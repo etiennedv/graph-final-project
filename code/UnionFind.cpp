@@ -6,8 +6,7 @@
 using namespace std;
 
 UnionFind::UnionFind(vector<Node*> nodes) {
-    for (vector<Node*>::iterator it = nodes.begin(); it != nodes.end(); it++) {
-        Node* n = *it;
+    for (auto n: nodes) {
         parent_[n] = n;
         rank_[n] = 0;
     }    
@@ -25,9 +24,9 @@ Node* UnionFind::Find_Parent(Node* node) {
     return p;  
 }
 
-bool UnionFind::Union(Edge* edge) {
-    Node* p1 = Find_Parent(edge->getStart());
-    Node* p2 = Find_Parent(edge->getEnd());
+bool UnionFind::Union(Node* n1, Node* n2) {
+    Node* p1 = Find_Parent(n1);
+    Node* p2 = Find_Parent(n2);
     if (p1 == p2) {
         return false;
     }
@@ -42,6 +41,11 @@ bool UnionFind::Union(Edge* edge) {
         parent_[p1] = p2;
         rank_[p2] += 1;
     }
+    
+    cout << n1->getData() << " parent = " << p1->getData() << endl;
+    cout << "rank = " << rank_[p1] << endl;
+    cout << n2->getData() << " parent = " << p2->getData() << endl;
+    cout << "rank = " << rank_[p2] << endl;
     return true;
 }
 

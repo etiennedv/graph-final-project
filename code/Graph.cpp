@@ -315,13 +315,15 @@ string make_dot(Graph* g) {
     } else {
       edgeColor = "gray";
     }
+    string label = to_string(e->getWeight());
     ss << "  " << e->getStart()->getData() << con << e->getEnd()->getData()
-       << " [color=\"" << edgeColor << "\" weight=" << e->getWeight() << "]" << endl;
+       << " [color=\"" << edgeColor <<  "\" weight=" << e->getWeight() << " label=" << label << " ]" << endl;
   }
   ss << "}" << endl;
   return ss.str();
 }
 
+// Kruskal's Algorithm for finding the minimum spanning tree (mst)
 Graph* Graph::mst_kruskal() {
     priority_queue <Edge, vector<Edge*>, myComparator> minHeap;
     vector<Edge*> edges = this->getEdges();
@@ -332,85 +334,39 @@ Graph* Graph::mst_kruskal() {
     }
     cout << "Pq size: " << minHeap.size() << endl;
     unordered_set<Node*> added;
-    UnionFind unionFind(this->getNodes());
+    UnionFind UnionFind(this->getNodes());
     Graph* mst(new Graph());
     int mst_edges = 0;
-    while(mst_edges < n - 1) {
+    while(mst->getEdges().size() < n - 1) {
         Edge* minEdge = minHeap.top();
-        cout << "Edge Weight: " << minEdge->getWeight() << endl;
         minHeap.pop();
-
-        if (!unionFind.Union(minEdge)) {
-          continue;
-        }
-
-        mst->addEdge(minEdge);
-        mst_edges++;
-        mst->addSpan(minEdge->getWeight());
         Node* n1 = minEdge->getStart();
         Node* n2 = minEdge->getEnd();
-        
-        if (added.count(n1) == 0) {
+        cout << "Checking Edge: " << n1->getData() << "_" << n2->getData() << endl;
+        if (!UnionFind.Union(n1, n2)) {
+          cout << "Can't Union" << endl;
+          continue;
+        }
+        mst->addEdge(minEdge);
+        mst->addSpan(minEdge->getWeight());
+        mst_edges++;
+      
+        string edge_label = minEdge->getStart()->getData() + minEdge->getEnd()->getData();
+    
+        if (added.count(n1) < 1) {
           mst->addNode(n1);
           added.insert(n1);
         }
-        if (added.count(n2) == 0) {
+        if (added.count(n2) < 1) {
           mst->addNode(n2);
           added.insert(n2);
         }
+        //mst->tick(edge_label);
     }
     
     return mst;
 }
 
-// Prim's algorithm
-Graph* Graph::mst_prim() {
-  priority_queue <Edge, vector<Edge*>, myComparator> minHeap;
-  //this->set_neighbors();
-  vector<Node*> nodes = this->getNodes();
-  Node* start = nodes[0];
-  cout << start->getData();
-  for (auto e: adj_edges(start)) {
-    minHeap.push(e);
-  }
-  Graph* mst(new Graph());
-  unordered_set<Node*> added;
-  unordered_set<Edge*> added_edges;
-  added.insert(start);
-  mst->addNode(start);
-  while (added.size() < this->getSize()) {
-    Edge* minEdge = minHeap.top();
-    Node* node1 = minEdge->getStart();
-    Node* node2 = minEdge->getEnd();
-    minHeap.pop();
-
-    if (added.count(node2) > 0) {
-      continue;
-    }
-    
-    mst->addEdge(minEdge);
-    added_edges.insert(minEdge);
-    mst->addSpan(minEdge->getWeight());
-    if (added.count(node1) == 0) {
-      mst->addNode(node1);
-      cout << node1->getData();
-      added.insert(node1);
-    }
-    if (added.count(node2) == 0) {
-      mst->addNode(node2);
-      cout << node2->getData();
-      added.insert(node2);
-    }
-    
-    for (auto e: adj_edges(node2)) {
-      if (added_edges.count(e) == 0) {
-        minHeap.push(e);
-      }
-    }
-  }
-
-  return mst;
-}
 
 void Graph::find_path(Node* start, Node* finish) {
   vector<Node*> nodes = this->getNodes();

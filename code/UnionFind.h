@@ -18,7 +18,8 @@ public:
     UnionFind(vector<Node*> nodes); 
     ~UnionFind();
     Node* Find_Parent(Node* node);
-    bool Union(Edge* edge);
+    bool Union(Node* n1, Node* n2);
+    
     
 };
  
