@@ -73,6 +73,27 @@ Here is the original orientation of the input graph with the minimum spanning tr
   <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/8a866acb-ec73-4365-a200-c909e2303aae" /> 
 </p>
 
+---
+
+## Try it!
+You can run the main.cpp file in the app folder using "make && ./run_app"
+
+For this graph I created nodes with busy airports in the US using each airports 3 letter code. Then I added some popular destinations out of that airport to other airports in the list, and added weights that denoted flight time. 
+
+
+<p align="center">
+  <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/ad7cd63e-c573-475c-b4b9-a16797b90926" /> 
+</p>
+
+---
+
+And here is the minimum spanning tree. When running my implementation of kruskal'a algorithm I seem to be having trouble with larger graphs and not getting the right number of nodes. Here I'm off by one, missing JFK Airport. This mst also has two edges going to PHX, where there should only b one in this case, since the edge is redundant. I'd expect the edge between den->phx should be deleted and the edge from LAX to JFK added since its the only way we ar egetting to JFK.
+<p align="center">
+  <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/cd8d71fc-6ce8-4e6b-9fa5-fe0211bb8099" /> 
+</p>
+
+
+
 
 
 
