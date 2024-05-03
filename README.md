@@ -87,14 +87,28 @@ For this graph I created nodes with busy airports in the US using each airports 
 
 ---
 
-And here is the minimum spanning tree. When running my implementation of kruskal'a algorithm I seem to be having trouble with larger graphs and not getting the right number of nodes. Here I'm off by one, missing JFK Airport. This mst also has two edges going to PHX, where there should only b one in this case, since the edge is redundant. I'd expect the edge between den->phx should be deleted and the edge from LAX to JFK added since its the only way we ar egetting to JFK.
+And here is the minimum spanning tree. When running my implementation of kruskal'a algorithm I seem to be having trouble with larger graphs and not getting the right number of nodes. Here I'm off by one, missing JFK Airport. This mst also has two edges going to PHX, where there should only b one in this case, since the edge is redundant. I'd expect the edge between den->phx should be deleted and the edge from LAX to JFK added since its the only way of getting to JFK, but that shouldn't matter. When DEN and PHX are added, DEN's parent is LAX with rank 2, and PHX's parent is ATL with rank 1. 
 <p align="center">
   <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/cd8d71fc-6ce8-4e6b-9fa5-fe0211bb8099" /> 
 </p>
 
+---
+
+Something about JFK only having one edge and being off on its own was throwing my algorithm for a loop. I added an edge from JFK to CLT and deleted the problematic edge from DEN to PHX and re-ran kruskal's algorithm.
+Here is the starting graph:
+<p align="center">
+  <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/b80d02a3-b05c-4ff7-8567-f30ceb43b894" /> 
+</p>
 
 
+Rerunning mst_kruskal:
+<p align="center">
+  <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/a61b595a-516c-41a2-8423-b703b078acba" /> 
+</p>
+Now there is a proper Minimum Spanning Tree, with all nodes connected and no cycles formed as well. I'm not sure why the edge from DEN to PHX was causing a problem, or why removing it and adding an edge from JFK to CLT fixed it. I will have to do more investigating.
 
+## Conclusion/Reflection
+I would really have liked to do more with this project and figure out why my algorithm was not running the way it should have for ALL graphs, but I had very limited time and spent the majority of the project wrestling with setting up a VScode C++ environment locally instead of using jupyter hub and then learning how cmake works so I can actually build the project. The rest of my time was spent trying to figure out the union find data structure and implementing kruskal's algorithm using the node structure of the homework. I have a lot of ideas to improve this project, like instead of creating an entire graph structure for the MST, using the edge colors to represent the MST of the given graph so that it retains the overall layout/structure of the original graph. Overall I think I could have explored using python better at this stage of my C++ experience, but I think I learned a lot of valuable C++ skills here. 
 
 
 
