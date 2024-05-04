@@ -87,7 +87,7 @@ For this graph I created nodes with busy airports in the US using each airports 
 
 ---
 
-And here is the minimum spanning tree. When running my implementation of kruskal'a algorithm I seem to be having trouble with larger graphs and not getting the right number of nodes. Here I'm off by one, missing JFK Airport. This mst also has two edges going to PHX, where there should only b one in this case, since the edge is redundant. I'd expect the edge between den->phx should be deleted and the edge from LAX to JFK added since its the only way of getting to JFK, but that shouldn't matter. When DEN and PHX are added, DEN's parent is LAX with rank 2, and PHX's parent is ATL with rank 1. 
+And here is the minimum spanning tree. When running my implementation of kruskal'a algorithm I seem to be having trouble with larger graphs and not getting the right number of nodes. Here I'm off by one, missing JFK Airport. This mst also has two edges going to PHX, where there should only be one in this case, since the edge is redundant. I'd expect the edge between den->phx should be deleted and the edge from LAX to JFK added since its the only way of getting to JFK, but that shouldn't matter. When DEN and PHX are added, DEN's parent is LAX with rank 2, and PHX's parent is ATL with rank 1. 
 <p align="center">
   <img src="https://github.com/etiennedv/graph-final-project/assets/10566058/cd8d71fc-6ce8-4e6b-9fa5-fe0211bb8099" /> 
 </p>
