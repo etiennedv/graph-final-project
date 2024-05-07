@@ -21,7 +21,6 @@ private:
                        // means it was the source node.
   Node* predecessor;   // The predecessor node in the spanning tree.
   vector<Node*> neighbors;
-  Node* parent;
 public:
   // Public Node members in this block are implemented for you.
   Node(string s);
@@ -97,10 +96,6 @@ public:
   int getRank();
 
   int getColor();
-
-  void setParent(Node* p);
-
-  Node* getParent();
 };
 
 #endif // NODE_H__

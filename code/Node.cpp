@@ -4,7 +4,6 @@ Node::Node(string s) {
   // DONE FOR YOU
   data = s;
   rank = 1;
-  parent = this;
 }
 
 Node::~Node() {
@@ -34,7 +33,6 @@ void Node::clear() {
   completion_time = -1;
   rank = 0;
   predecessor = NULL;
-  parent = this;
 }
 
 void Node::setColor(int search_color, int time) {
@@ -97,13 +95,6 @@ vector<Node*> Node::get_neighbors() {
   return neighbors;
 }
 
-void Node::setParent(Node* p) {
-  this->parent = p;
-}
-
-Node* Node::getParent() {
-  return parent;
-}
 // overloading operator << lets you put a Node object into an output
 // stream.
 ostream& operator<<(std::ostream& out, Node node) {
