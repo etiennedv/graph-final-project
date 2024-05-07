@@ -41,8 +41,8 @@ Graph* mkgraph() {
   LAX_MIA->setWeight(300);
   Edge* JFK_LAX(new Edge(JFK, LAX));
   JFK_LAX->setWeight(310);
-  Edge* JFK_CLT(new Edge(JFK, CLT));
-  JFK_CLT->setWeight(125);
+  //Edge* JFK_CLT(new Edge(JFK, CLT));
+  //JFK_CLT->setWeight(125);
   Edge* ORD_PHX(new Edge(ORD, PHX));
   ORD_PHX->setWeight(230);
   Edge* ORD_LAX(new Edge(ORD, LAX));
@@ -100,7 +100,7 @@ Graph* mkgraph() {
   ret->addEdge(LAX_MCO);
   ret->addEdge(LAX_MIA);
   ret->addEdge(JFK_LAX);
-  ret->addEdge(JFK_CLT);
+  //ret->addEdge(JFK_CLT);
   ret->addEdge(JFK_MCO);
   ret->addEdge(ORD_LAX);
   ret->addEdge(ORD_PHX);
@@ -132,9 +132,6 @@ int main(){
     cout << "MST span = " << min_tree->getSpan() << endl;
     
     vector<Node*> nodes = min_tree->getNodes();
-    for (auto node: nodes) {
-      cout << "Node: " << node->getData() << " Parent: " << node->getParent()->getData() << endl;
-    }
     return 0;
 }
 
