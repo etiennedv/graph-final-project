@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <sstream>
-
+#include <utility>
 using namespace std;
 using std::cout;
 
@@ -77,6 +77,34 @@ void Graph::setDirected(bool val) {
 bool Graph::isDirected() {
   // DONE FOR YOU
   return directed;
+}
+
+void Graph::createNode(string name) {
+  Node* node(new Node(name));
+  this->addNode(node);
+}
+
+void Graph::createEdge(Node* n1, Node* n2) {
+  Edge* edge(new Edge(n1, n2));
+  edge->setWeight((rand() % 9) + 1);
+  this->addEdge(edge);
+}
+
+void Graph::buildGraph(int num_nodes, int num_edges) {
+  unordered_set<Edge*> edges;
+  for (int i = 1; i < num_nodes + 1; i++) {
+    createNode(to_string(i));
+  }
+  vector<Node*> nodes = this->getNodes();
+  int edge_count = 0;
+  while (edge_count < num_edges + 1) {
+    int k = rand() % num_nodes;
+    int l = rand() % num_nodes;
+    
+    createEdge(nodes[k], nodes[l]);
+    edge_count++;
+  }
+    
 }
 
 set<Edge*> Graph::getAdjacentEdges(Node* n) {
@@ -312,6 +340,8 @@ string make_dot(Graph* g) {
       edgeColor = "blue";
     } else if (e->getType() == CROSS_EDGE) {
       edgeColor = "green";
+    } else if (e->getType() == MIN_EDGE) {
+      edgeColor = "red";
     } else {
       edgeColor = "gray";
     }
@@ -347,9 +377,11 @@ Graph* Graph::mst_kruskal() {
           cout << "Can't Union" << endl;
           continue;
         }
+
         mst->addEdge(minEdge);
         mst->addSpan(minEdge->getWeight());
         mst_edges++;
+        minEdge->setType(14);
       
         string edge_label = minEdge->getStart()->getData() + minEdge->getEnd()->getData();
     
@@ -363,13 +395,12 @@ Graph* Graph::mst_kruskal() {
         }
         //mst->tick(edge_label);
     }
-    
     return mst;
 }
 
 
 void Graph::find_path(Node* start, Node* finish) {
-  vector<Node*> nodes = this->getNodes();
+  //vector<Node*> nodes = this->getNodes();
   set<Node*> path;
   deque<Node*> q;
   q.push_back(start);
@@ -381,13 +412,14 @@ void Graph::find_path(Node* start, Node* finish) {
     if (path.count(curr) == 0) {
       path.insert(curr);
     }
-    if (curr == finish) {
+    else if (curr == finish) {
       for (auto node: path) {
         std::cout << node->getData();
       }
       cout << endl;
       return;
     }
+    vector<Node*> nodes = curr->get_neighbors();
     for (auto node: nodes) {
       if (path.count(node) == 0) {
         q.push_back(node);

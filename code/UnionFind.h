@@ -19,7 +19,7 @@ public:
     ~UnionFind();
     Node* Find_Parent(Node* node);
     bool Union(Node* n1, Node* n2);
-    
+    Node* getParent(Node* node);
     
 };
  

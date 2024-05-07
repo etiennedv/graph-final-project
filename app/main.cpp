@@ -33,14 +33,14 @@ Graph* mkgraph() {
   DFW_DEN->setWeight(130);
   Edge* DEN_LAS(new Edge(DEN, LAS));
   DEN_LAS->setWeight(120);
-  Edge* DEN_PHX(new Edge(DEN, PHX));
-  DEN_PHX->setWeight(155);
+  Edge* PHX_DEN(new Edge(PHX, DEN));
+  PHX_DEN->setWeight(155);
   Edge* LAX_MCO(new Edge(LAX, MCO));
   LAX_MCO->setWeight(290);
   Edge* LAX_MIA(new Edge(LAX, MIA));
   LAX_MIA->setWeight(300);
-  //Edge* JFK_LAX(new Edge(JFK, LAX));
-  //JFK_LAX->setWeight(310);
+  Edge* JFK_LAX(new Edge(JFK, LAX));
+  JFK_LAX->setWeight(310);
   Edge* JFK_CLT(new Edge(JFK, CLT));
   JFK_CLT->setWeight(125);
   Edge* ORD_PHX(new Edge(ORD, PHX));
@@ -96,10 +96,10 @@ Graph* mkgraph() {
   ret->addEdge(DFW_ATL);
   ret->addEdge(DFW_DEN);
   ret->addEdge(DEN_LAS);
-  ret->addEdge(DEN_PHX);
+  ret->addEdge(PHX_DEN);
   ret->addEdge(LAX_MCO);
   ret->addEdge(LAX_MIA);
-  //ret->addEdge(JFK_LAX);
+  ret->addEdge(JFK_LAX);
   ret->addEdge(JFK_CLT);
   ret->addEdge(JFK_MCO);
   ret->addEdge(ORD_LAX);
@@ -131,5 +131,10 @@ int main(){
 
     cout << "MST span = " << min_tree->getSpan() << endl;
     
+    vector<Node*> nodes = min_tree->getNodes();
+    for (auto node: nodes) {
+      cout << "Node: " << node->getData() << " Parent: " << node->getParent()->getData() << endl;
+    }
     return 0;
 }
+

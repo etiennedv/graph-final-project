@@ -119,11 +119,36 @@ TEST_F(test_Graph, Graph_UnionFindTest3) {
   ASSERT_EQ(min_tree->getSpan(), 9);
 
   vector<Node*> nodes = min_tree->getNodes();
-  
-  
 }
 
+TEST_F(test_Graph, Graph_FindPath) {
+  Graph* graph = mkgraph_test2();
+  graph->tick("Start");
+  vector<Node*> nodes = graph->getNodes();
+  Node* start = nodes[0];
+  Node* finish = nodes[nodes.size() - 1];
+  graph->find_path(start, finish);
+}
 
+TEST_F(test_Graph, Graph_UnionFindBasic) {
+  Graph* graph = mkgraph_test2();
+  graph->tick("Start");
+  Graph* mst = graph->mst_kruskal();
+  mst->tick("End");
+}
+
+TEST_F(test_Graph, Graph_buildGraph) {
+  Graph* graph(new Graph());
+  graph->buildGraph(10, 20);
+  vector<Node*> nodes = graph->getNodes();
+  for (auto n: nodes) {
+    cout << "Node: " << n->getData() << endl;
+  }
+  graph->tick("Finish");
+  Graph* min_tree = graph->mst_kruskal();
+  min_tree->tick("Min Tree");
+  graph->tick("MST original Graph");
+}
 // ---------------------------------------------------------------- Helpers ---
 
 Graph* buildGraphToClear() {
@@ -247,10 +272,11 @@ Graph* mkgraph_test2() {
   Edge* ab(new Edge(a, b));
   Edge* ac(new Edge(a, c));
   Edge* bc(new Edge(b, c));
-  Edge* ce(new Edge(c, e));
   Edge* cd(new Edge(c, d));
   Edge* bd(new Edge(b, d));
   Edge* de(new Edge(d, e));
+  Edge* ec(new Edge(e, c));
+  Edge* ad(new Edge(a, d));
 
   ret->addNode(a);
   ret->addNode(b);
@@ -261,18 +287,20 @@ Graph* mkgraph_test2() {
   ret->addEdge(ab);
   ret->addEdge(ac);
   ret->addEdge(bc);
-  ret->addEdge(ce);
+  ret->addEdge(ad);
   ret->addEdge(cd);
   ret->addEdge(bd);
   ret->addEdge(de);
+  ret->addEdge(ec);
 
   ab->setWeight(10);
   ac->setWeight(8);
   bc->setWeight(4);
   bd->setWeight(4);
   cd->setWeight(4);
-  ce->setWeight(4);
+  ad->setWeight(4);
   de->setWeight(2);
+  ec->setWeight(1);
 
   return ret;
 }

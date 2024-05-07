@@ -27,12 +27,15 @@ public:
   int getSpan();
   vector<Edge*> adj_edges(Node* node);
   void addSpan(int weight);
+  void createNode(string name);
+  void createEdge(Node* n1, Node* n2);
   void addNode(Node* n);
   void addEdge(Edge* e);
   void removeNode(Node* n);
   void removeEdge(Edge* e);
   bool isDirected();
   void setDirected(bool val);
+  void buildGraph(int num_nodes, int num_edges);
   set<Edge*> getAdjacentEdges(Node* n);
   friend std::ostream& operator<<(std::ostream& out, Graph graph);
 

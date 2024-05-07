@@ -12,6 +12,7 @@ using namespace std;
 #define BACK_EDGE 11
 #define FORWARD_EDGE 12
 #define CROSS_EDGE 13
+#define MIN_EDGE 14
 
 class Edge {
 private:
